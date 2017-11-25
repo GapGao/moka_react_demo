@@ -1,0 +1,75 @@
+ul, li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.clearfix:after{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.tree{
+    width: 100%;
+    box-sizing: border-box;
+}
+.tree-header{
+    width: 100%;
+}
+.title{
+    float: left;
+    color: rgb(209, 218, 212);
+    font-size: 20px;
+}
+.clear{
+    float: right;
+    color: #fff;
+    font-size: 12px;
+    line-height: 26px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+.tree .tree-list{
+    width: 100%;
+    color: #fff;
+    font-size: 12px;
+}
+.tree .tree-list>li{
+    margin-top: 10px;
+}
+.tree .tree-list ul{
+    margin-left: 10%;
+    margin-top: 8px;
+}
+.tree .tree-list li li{
+    color: rgb(209, 218, 212);
+    padding: 4px 0;
+}
+.tree .tree-list input[type="checkbox"]{
+    vertical-align: middle;
+    border-radius: 4px;
+    background-color: black;
+    margin-right: 15px;
+}
+.tree .tree-list .value{
+    float: right;
+    padding: 0 8px;
+}
+.tree .tree-list>li>div .value{
+    background: rgb(81, 106, 118);
+    border-radius: 8px;
+}
+.tree .tree-item{
+    cursor: pointer;
+}
+.tree .tree-item .drop{
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border-left: 1px #fff solid;
+    border-bottom: 1px #fff solid;
+    transform: rotate(-45deg);
+    margin-top: -3px;
+    margin-left: 10px;
+}
