@@ -60,7 +60,7 @@ ul, li{
     background: rgb(81, 106, 118);
     border-radius: 8px;
 }
-.tree .tree-item{
+.tree .tree-item span{
     cursor: pointer;
 }
 .tree .tree-item .drop{
