@@ -8,11 +8,22 @@ class Tree extends Component {
 				data: []
 			}
 	} 
+	/**
+	 * 父层传的props，改变时触发事件
+	 * 
+	 * @param {any} nextProps 
+	 * @memberof Tree
+	 */
 	componentWillReceiveProps  (nextProps) {
 		this.setState({
 			data: nextProps.data
 		})
 	}
+	/**
+	 * 清空按钮点击触发事件，取消所有项选中
+	 * 
+	 * @memberof Tree
+	 */
 	clearHandleClick () {
 		var myData = this.state.data
 		for (let i = 0; i < myData.length; i++){
@@ -27,8 +38,16 @@ class Tree extends Component {
 			})
 		}
 	}
-	itemHandleClick (index, event) {
+	/**
+	 * checkbox改变触发事件，判断并更新数据state
+	 * 
+	 * @param {any} index 点击项所在数据位置
+	 * @param {any} e 事件对象
+	 * @memberof Tree
+	 */
+	handleChange (index, e) {
 		var myData = this.state.data
+		var emitData = undefined
 		if (!myData[index[0]]) return
 		if (index.length === 1) {
 			myData[index[0]].checked = !myData[index[0]].checked
@@ -37,6 +56,7 @@ class Tree extends Component {
 					myData[index[0]].children[j].checked = myData[index[0]].checked
 				}
 			}
+			emitData = myData[index[0]]
 		} else {
 			myData[index[0]].children[index[1]].checked = !myData[index[0]].children[index[1]].checked
 			var flag = true
@@ -44,34 +64,64 @@ class Tree extends Component {
 				flag = myData[index[0]].children[i].checked && flag
 			}
 			myData[index[0]].checked = flag
+			emitData = myData[index[0]].children[index[1]]
 		}
 		this.setState({
 			data: myData
 		})
+		// 选中，取消，将变更的数据传会父组件，以便其调用，参数为 整个树数据、点击项更新后的数据、触发change事件的node节点
+		this.props.handleCheck(this.state, emitData, e.target)
 	}
-	handelChange (index, event) {
-		this.itemHandleClick(index, event)
+	/**
+	 * 
+	 * 父层点击触发事件，toggle子目录
+	 * @param {any} e 事件对象
+	 * @memberof Tree
+	 */
+	itemHandleClick (data, e) {
+		if (parseInt(e.target.parentNode.parentNode.style.height ? e.target.parentNode.parentNode.style.height : 0, 10) < e.target.parentNode.parentNode.scrollHeight) {
+			e.target.parentNode.parentNode.style.height = e.target.parentNode.parentNode.scrollHeight + 'px'
+		} else {
+			e.target.parentNode.parentNode.style.height = '19px'
+		}
+		if (e.target.parentNode.parentNode.className === 'open') {
+			e.target.parentNode.parentNode.className = ''
+		} else {
+			e.target.parentNode.parentNode.className = 'open'
+		}
+		// 点击目录名时触发 参数为  点击项数据， 触发点击click事件的node节点
+		this.props.handleClick(data, e.target)
+	}
+	/**
+	 * 
+	 * 点击目录名时触发事件
+	 * @param {any} data 点击项数据，
+	 * @param {any} e 事件对象
+	 * @memberof Tree
+	 */
+	childrenHandleClick (data, e) {
+		this.props.handleClick(data, e.target)
 	}
   render() {
     return (
       <div className="tree">
 				<div className="tree-header clearfix">
 					<div className="title">{this.props.title?this.props.title:'列表'}</div>
-					<div className="clear" onClick={this.clearHandleClick.bind(this)}>清空</div>
+					{this.props.check ? <div className="clear" onClick={this.clearHandleClick.bind(this)}>清空</div> : null}
 				</div>
 				<ul className="tree-list clearfix">
 					{
 						(this.state.data && typeof this.props.data === 'object' && this.state.data.length) ?
 							this.state.data.map((parent, index) => {
 								return <li key={parent.value}>
-												<div className="tree-item">
-													<input type="checkbox" onChange={this.itemHandleClick.bind(this, [index])} checked={parent.checked} />
-													<span onClick={this.itemHandleClick.bind(this, [index])}>{parent.label}</span>
+												<div className="tree-item clearfix">
+													{this.props.check ? <input type="checkbox" onChange={this.handleChange.bind(this, [index])} checked={parent.checked} /> : null}
+													<span className="label" onClick={this.itemHandleClick.bind(this, parent)}>{parent.label}</span>
 													{
 														(parent.children && parent.children.length)?
 														<span className="drop"></span> : null
 													}
-													<div className="value">{parent.count}</div>
+													<span className="value">{parent.count}</span>
 												</div>
 												{
 													(parent.children && parent.children.length)?
@@ -79,9 +129,9 @@ class Tree extends Component {
 														{
 															parent.children.map((children, i) => {
 																return <li key={children.value}>
-																				<div className="tree-item">
-																					<input type="checkbox" onClick={this.itemHandleClick.bind(this, [index, i])} checked={children.checked}/>
-																					<span onClick={this.itemHandleClick.bind(this, [index, i])}>{children.label}</span>
+																				<div className="tree-item clearfix">
+																					{this.props.check ? <input type="checkbox" onChange={this.handleChange.bind(this, [index, i])} checked={children.checked}/> : null}
+																					<span className="label" onClick={this.childrenHandleClick.bind(this, children)}>{children.label}</span>
 																					<div className="value">{children.count}</div>
 																				</div>
 																			</li>

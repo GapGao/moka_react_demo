@@ -21,6 +21,9 @@ ul, li{
     float: left;
     color: rgb(209, 218, 212);
     font-size: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
 }
 .clear{
     float: right;
@@ -37,6 +40,9 @@ ul, li{
 }
 .tree .tree-list>li{
     margin-top: 10px;
+    height: 19px;
+    overflow: hidden;
+    transition: height .5s;
 }
 .tree .tree-list ul{
     margin-left: 10%;
@@ -47,10 +53,10 @@ ul, li{
     padding: 4px 0;
 }
 .tree .tree-list input[type="checkbox"]{
-    vertical-align: middle;
     border-radius: 4px;
     background-color: black;
     margin-right: 15px;
+    float: left;
 }
 .tree .tree-list .value{
     float: right;
@@ -60,16 +66,27 @@ ul, li{
     background: rgb(81, 106, 118);
     border-radius: 8px;
 }
-.tree .tree-item span{
+.tree .tree-list span{
     cursor: pointer;
 }
+.tree-item .label {
+    float: left;
+    max-width: calc(70% - 32px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+}
 .tree .tree-item .drop{
-    width: 6px;
-    height: 6px;
-    display: inline-block;
+    float: left;
+    width: 4px;
+    height: 4px;
     border-left: 1px #fff solid;
     border-bottom: 1px #fff solid;
-    transform: rotate(-45deg);
-    margin-top: -3px;
+    transition: transform .5s;
+    transform: rotate(45deg);
+    margin-top: 6.5px;
     margin-left: 10px;
+}
+.tree .open .tree-item .drop{
+    transform: rotate(-45deg);
 }

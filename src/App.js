@@ -6,9 +6,9 @@ import Tree from './component/tree';
 class App extends Component {
   constructor(props){
     super(props)
-    console.log(props)
     this.state={
       title: "招聘职位",
+      check: true,
       data: []
     };
   } ;
@@ -89,11 +89,17 @@ class App extends Component {
       this.setState({data: data})
     // }, 2000)
   }
+  handleCheck (data, clickItem, node) {
+    console.log(data, clickItem, node)
+  }
+  handleClick (data, node) {
+    console.log(data, node)
+  }
   render() {
     return (
       <div className="App">
         <aside className="list">
-          <Tree title={this.state.title} data={this.state.data}/>
+          <Tree title={this.state.title} check={this.state.check} data={this.state.data} handleClick={this.handleClick.bind(this)} handleCheck={this.handleCheck.bind(this)}/>
         </aside>
       </div>
     );
