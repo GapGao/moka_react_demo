@@ -89,7 +89,6 @@ class Tree extends Component {
 	 * @memberof Tree
 	 */
 	itemHandleClick (data, e) {
-		console.dir(e.target.parentNode.nextSibling)
 		if (e.target.parentNode.parentNode.className === 'open') {
 			e.target.parentNode.parentNode.className = ''
 			e.target.parentNode.nextSibling.style.height = '0px'
