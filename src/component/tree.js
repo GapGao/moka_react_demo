@@ -83,8 +83,8 @@ class Tree extends Component {
 		this.props.handleCheck(this.state, emitData, e.target)
 	}
 	/**
-	 * 
 	 * 父层点击触发事件，toggle子目录
+	 * 
 	 * @param {any} e 事件对象
 	 * @memberof Tree
 	 */
@@ -100,8 +100,8 @@ class Tree extends Component {
 		this.props.handleClick(data, e.target)
 	}
 	/**
-	 * 
 	 * 点击目录名时触发事件
+	 * 
 	 * @param {any} data 点击项数据，
 	 * @param {any} e 事件对象
 	 * @memberof Tree
