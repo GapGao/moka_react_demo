@@ -9,10 +9,11 @@
 组件tree调用方法：
 import tree.js tree.css
 
-  <Tree title={title} data={data} handleCheck={handleCheck}/>
+  <Tree title={title} check={true} open={true} data={data} handleClick={handleClick} handleCheck={handleCheck}/>
   参数：
-  title 为 string 类型
+  title 为 string 类型 为组件title
   check 为 boolean 类型 true为有checkbox false为无
+  open 为 boolean 类型 true为默认打开子目录 false为默认关闭
   data 为 object（array） 类型 例：
   data = [
       {
@@ -93,15 +94,15 @@ import tree.js tree.css
     checked true为选中 false为未选中 （check参数为true时，该参数有效）
     children 为子目录
 
+  handleClick 点击目录名时触发事件，参数为
+    data 更新后的数据
+    node 触发click事件的node节点
+
   handleCheck 为checkbox改变触发事件，参数为
     data 更新后的数据
     clickItem 点击项的数据
     node 触发change事件的node节点
 
-  handleClick 点击目录名时触发事件，参数为
-    data 更新后的数据
-    node 触发click事件的node节点
-  
 欠缺：
     并不能处理多层级tree数据，后续会再找时间优化
 

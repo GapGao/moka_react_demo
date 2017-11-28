@@ -9,6 +9,7 @@ class App extends Component {
     this.state={
       title: "招聘职位",
       check: true,
+      open: true,
       data: []
     };
   } ;
@@ -99,7 +100,7 @@ class App extends Component {
     return (
       <div className="App">
         <aside className="list">
-          <Tree title={this.state.title} check={this.state.check} data={this.state.data} handleClick={this.handleClick.bind(this)} handleCheck={this.handleCheck.bind(this)}/>
+          <Tree title={this.state.title} check={this.state.check} open={this.state.open} data={this.state.data} handleClick={this.handleClick.bind(this)} handleCheck={this.handleCheck.bind(this)}/>
         </aside>
       </div>
     );

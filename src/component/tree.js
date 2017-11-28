@@ -20,6 +20,16 @@ class Tree extends Component {
 		})
 	}
 	/**
+	 * 组件更新完成事件
+	 * 
+	 * @memberof Tree
+	 */
+	componentDidUpdate () {
+		for (var i = 0; i < this.refs.tree.children[1].children.length; i++) {
+			this.refs.tree.children[1].children[i].children[1].style.height = this.props.open ? this.refs.tree.children[1].children[i].children[1].scrollHeight + 'px' : '0px'
+		}
+	}
+	/**
 	 * 清空按钮点击触发事件，取消所有项选中
 	 * 
 	 * @memberof Tree
@@ -79,15 +89,13 @@ class Tree extends Component {
 	 * @memberof Tree
 	 */
 	itemHandleClick (data, e) {
-		if (parseInt(e.target.parentNode.parentNode.style.height ? e.target.parentNode.parentNode.style.height : 0, 10) < e.target.parentNode.parentNode.scrollHeight) {
-			e.target.parentNode.parentNode.style.height = e.target.parentNode.parentNode.scrollHeight + 'px'
-		} else {
-			e.target.parentNode.parentNode.style.height = '19px'
-		}
+		console.dir(e.target.parentNode.nextSibling)
 		if (e.target.parentNode.parentNode.className === 'open') {
 			e.target.parentNode.parentNode.className = ''
+			e.target.parentNode.nextSibling.style.height = '0px'
 		} else {
 			e.target.parentNode.parentNode.className = 'open'
+			e.target.parentNode.nextSibling.style.height = e.target.parentNode.nextSibling.scrollHeight + 'px'
 		}
 		// 点击目录名时触发 参数为  点击项数据， 触发点击click事件的node节点
 		this.props.handleClick(data, e.target)
@@ -104,7 +112,7 @@ class Tree extends Component {
 	}
   render() {
     return (
-      <div className="tree">
+			<div className="tree" ref="tree">
 				<div className="tree-header clearfix">
 					<div className="title">{this.props.title?this.props.title:'列表'}</div>
 					{this.props.check ? <div className="clear" onClick={this.clearHandleClick.bind(this)}>清空</div> : null}
@@ -113,7 +121,7 @@ class Tree extends Component {
 					{
 						(this.state.data && typeof this.props.data === 'object' && this.state.data.length) ?
 							this.state.data.map((parent, index) => {
-								return <li key={parent.value}>
+								return <li key={parent.value} className={this.props.open ? 'open' : null}>
 												<div className="tree-item clearfix">
 													{this.props.check ? <input type="checkbox" onChange={this.handleChange.bind(this, [index])} checked={parent.checked} /> : null}
 													<span className="label" onClick={this.itemHandleClick.bind(this, parent)}>{parent.label}</span>

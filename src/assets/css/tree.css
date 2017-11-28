@@ -40,13 +40,15 @@ ul, li{
 }
 .tree .tree-list>li{
     margin-top: 10px;
-    height: 19px;
-    overflow: hidden;
-    transition: height .5s;
+}
+.tree .tree-list>li.open{
+    height: auto;
 }
 .tree .tree-list ul{
     margin-left: 10%;
     margin-top: 8px;
+    overflow: hidden;
+    transition: height .5s;
 }
 .tree .tree-list li li{
     color: rgb(209, 218, 212);
